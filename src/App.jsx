@@ -11,8 +11,8 @@ import Features from './components/Features';
 import HowItWorks from './components/HowItWorks';
 
 import ContactoPage from './pages/contactoPage';
-import LineaPage from './pages/lineaPage';
-import PoliticasPage from './pages/politicasPage';
+import PortfolioPage from './pages/portfolioPage';
+import AboutPage from './pages/aboutPage';
 
 import * as Sentry from '@sentry/react';
 
@@ -40,8 +40,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/contacto" element={<ContactoPage />} />
-            <Route path="/linea" element={<LineaPage />} />
-            <Route path="/politicas" element={<PoliticasPage />} />
+            <Route path="/portfolio" element={<PortfolioPage />} />
+            <Route path="/about" element={<AboutPage />} />
           </Routes>
         </div>
 

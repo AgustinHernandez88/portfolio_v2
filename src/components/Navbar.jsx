@@ -6,14 +6,13 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "About", path: "/nosotros" },
-    { name: "Portfolio", path: "/linea" },
+    { name: "About", path: "/about" },
+    { name: "Portfolio", path: "/portfolio" },
     { name: "Blog", path: "/contacto" },
   ];
-  
 
   return (
-    <header className="w-full bg-black text-white py-6 px-6">
+    <header className="fixed top-0 left-0 w-full bg-black text-white py-6 px-6 z-50 shadow-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Nombre izquierdo */}
         <Link
