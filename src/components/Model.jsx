@@ -1,125 +1,102 @@
-import { useGSAP } from "@gsap/react"
-import gsap from "gsap";
-import ModelView from "./ModelView";
-import { useEffect, useRef, useState } from "react";
-import { yellowImg } from "../utils";
+import React, { useState } from "react";
 
-import * as THREE from 'three';
-import { Canvas } from "@react-three/fiber";
-import { View } from "@react-three/drei";
-import { models, sizes } from "../constants";
-import { animateWithGsapTimeline } from "../utils/animations";
+const experiences = [
+  {
+    title: "Soporte TI",
+    company: "Transdev Chile",
+    date: "Ago 2023 - Actualidad",
+    summary:
+      "Especialista Semi senior en TI orientado a la administración de infraestructura en entornos Windows y Azure, realizando proyectos estratégicos.",
+    description:
+      `🔹 Liderazgo y Gestión de Proyectos
+Encargado de la coordinación de Mesa de Ayuda, liderando la gestión de tickets, brindando soporte a más de 450 equipos corporativos, garantizando el cumplimiento de SLA y la satisfacción de los usuarios.
+Supervisión, planificación y ejecución de auditorías basadas en políticas de TI, consolidando informes y asegurando la trazabilidad de cada activo.
+Gestión de presupuestos con proveedores.
 
-const Model = () => {
-  const [size, setSize] = useState('small');
-  const [model, setModel] = useState({
-    title: 'iPhone 15 Pro in Natural Titanium',
-    color: ['#8F8A81', '#FFE7B9', '#6F6C64'],
-    img: yellowImg,
-  })
+🔹 Administración de Infraestructura IT
+Gestión de Active Directory, Azure AD y Office 365 (usuarios, permisos, licencias, SharePoint, Exchange, Entra ID y Compliance).
+Mantenimiento de redes MPLS y procesos de offboarding.
 
-  // camera control for the model view
-  const cameraControlSmall = useRef();
-  const cameraControlLarge = useRef();
+🔹 Ciberseguridad y Protección de Activos
+Implementación de proyectos bajo norma ISO 27001 (MFA, etiquetas).
+Administración de CrowdStrike y Carbon Black, capacitaciones de seguridad, análisis proactivo de amenazas.`,
+  },
+  {
+    title: "Soporte TI",
+    company: "S.T Computación - Universidad Andrés Bello",
+    date: "Ene 2022 - Mar 2023",
+    summary:
+      "Soporte Nivel 1-2 y administración de infraestructura IT en entornos educativos y corporativos.",
+    description:
+      `🔹 Gestión y Mantenimiento de Equipos TI
+Diagnóstico, reparación de equipos, administración de dominio y repositorio.
 
-  // model
-  const small = useRef(new THREE.Group());
-  const large = useRef(new THREE.Group());
+🔹 Redes y Telecomunicaciones
+Manejo de cableado estructurado, switches y redes MPLS.
 
-  // rotation
-  const [smallRotation, setSmallRotation] = useState(0);
-  const [largeRotation, setLargeRotation] = useState(0);
+🔹 Soporte Técnico y Atención al Usuario
+Resolución de incidencias, administración de perfiles en AD, documentación de procedimientos.`,
+  },
+  {
+    title: "Practicante Técnico Electrónico",
+    company: "Servicios de Ingeniería VIPAC",
+    date: "Ene 2021 - Dic 2021",
+    summary:
+      "Practicante en desarrollo de interfaces HMI, programación en PLC y soporte en automatización.",
+    description:
+      `🔹 Automatización y Desarrollo Tecnológico
+Programación de PLCs, desarrollo de interfaces HMI, ensamblaje de paneles eléctricos.
 
-  const tl = gsap.timeline();
+🔹 Diseño Técnico y Presentación Corporativa
+Creación de catálogos, documentación técnica y apoyo en proyectos de automatización.`,
+  },
+];
 
-  useEffect(() => {
-    if(size === 'large') {
-      animateWithGsapTimeline(tl, small, smallRotation, '#view1', '#view2', {
-        transform: 'translateX(-100%)',
-        duration: 2
-      })
-    }
-
-    if(size ==='small') {
-      animateWithGsapTimeline(tl, large, largeRotation, '#view2', '#view1', {
-        transform: 'translateX(0)',
-        duration: 2
-      })
-    }
-  }, [size])
-
-  useGSAP(() => {
-    gsap.to('#heading', { y: 0, opacity: 1 })
-  }, []);
+const ExperienceCard = ({ title, company, date, summary, description }) => {
+  const [showFull, setShowFull] = useState(false);
 
   return (
-    <section className="common-padding">
-      <div className="screen-max-width">
-        <h1 id="heading" className="section-heading">
-          Take a closer look.
-        </h1>
+    <div className="relative group border-l-4 border-yellow-300 pl-8 mb-16">
+      <span className="absolute -left-2 top-1.5 w-4 h-4 rounded-full bg-yellow-300"></span>
 
-        <div className="flex flex-col items-center mt-5">
-          <div className="w-full h-[75vh] md:h-[90vh] overflow-hidden relative">
-            <ModelView 
-              index={1}
-              groupRef={small}
-              gsapType="view1"
-              controlRef={cameraControlSmall}
-              setRotationState={setSmallRotation}
-              item={model}
-              size={size}
-            />  
+      <p className="text-yellow-300 font-semibold text-base md:text-lg">{title}</p>
+      <h3 className="text-white font-bold text-xl md:text-2xl mt-1">{company}</h3>
+      <p className="text-white text-base md:text-lg mb-2">{date}</p>
 
-            <ModelView 
-              index={2}
-              groupRef={large}
-              gsapType="view2"
-              controlRef={cameraControlLarge}
-              setRotationState={setLargeRotation}
-              item={model}
-              size={size}
-            />
+      <p className="text-white text-base md:text-lg mb-2">
+        {summary}
+      </p>
 
-            <Canvas
-              className="w-full h-full"
-              style={{
-                position: 'fixed',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                overflow: 'hidden'
-              }}
-              eventSource={document.getElementById('root')}
-            >
-              <View.Port />
-            </Canvas>
-          </div>
+      {showFull && (
+        <p className="text-white text-sm md:text-base whitespace-pre-line leading-relaxed">
+          {description}
+        </p>
+      )}
 
-          <div className="mx-auto w-full">
-            <p className="text-sm font-light text-center mb-5">{model.title}</p>
+      <button
+        className="mt-3 text-sm md:text-base text-yellow-300 hover:underline"
+        onClick={() => setShowFull(!showFull)}
+      >
+        {showFull ? "Ver menos" : "Ver más →"}
+      </button>
+    </div>
+  );
+};
 
-            <div className="flex-center">
-              <ul className="color-container">
-                {models.map((item, i) => (
-                  <li key={i} className="w-6 h-6 rounded-full mx-2 cursor-pointer" style={{ backgroundColor: item.color[0] }} onClick={() => setModel(item)} />
-                ))}
-              </ul>
+const WorkExperience = () => {
+  return (
+    <section className="px-6 md:px-32 py-14 bg-[#111111] min-h-screen">
+      <h2 className="text-center text-white text-4xl md:text-5xl font-bold mb-20">
+        Work Experience
+      </h2>
 
-              <button className="size-btn-container">
-                {sizes.map(({ label, value }) => (
-                  <span key={label} className="size-btn" style={{ backgroundColor: size === value ? 'white' : 'transparent', color: size === value ? 'black' : 'white'}} onClick={() => setSize(value)}>
-                    {label}
-                  </span>
-                ))}
-              </button>
-            </div>
-          </div>
-        </div>
+      <div className="flex flex-col">
+        {experiences.map((exp, idx) => (
+          <ExperienceCard key={idx} {...exp} />
+        ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Model
+export default WorkExperience;

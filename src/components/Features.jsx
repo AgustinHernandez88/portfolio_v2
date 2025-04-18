@@ -1,95 +1,131 @@
-import { useGSAP } from '@gsap/react'
-import React, { useRef } from 'react'
-import { animateWithGsap } from '../utils/animations';
-import { explore1Img, explore2Img, exploreVideo } from '../utils';
-import gsap from 'gsap';
+import React from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
-const Features = () => {
-  const videoRef = useRef();
+const educationItems = [
+  {
+    logo: "/assets/images/inacap.png",
+    institution: "INACAP",
+    title: "Ingeniería en Informática",
+    year: "2025",
+  },
+  {
+    logo: "/assets/images/udemy.svg",
+    institution: "Udemy",
+    title: "Curso de ReactJS",
+    year: "2024",
+  },
+  {
+    logo: "/assets/images/aws.png",
+    institution: "AWS Academy",
+    title: "Fundamentos AWS Cloud",
+    year: "2024",
+  },
+  {
+    logo: "/assets/images/inacap.png",
+    institution: "INACAP",
+    title: "Desarrollador Fullstack",
+    year: "2023",
+  },
+  {
+    logo: "/assets/images/google.png",
+    institution: "Google",
+    title: "Certificado Análisis de Datos",
+    year: "2023",
+  },
+  {
+    logo: "/assets/images/inacap.png",
+    institution: "INACAP",
+    title: "Desarrollo de Aplicaciones Básicas",
+    year: "2023",
+  },
+  {
+    logo: "/assets/images/inacap.png",
+    institution: "INACAP",
+    title: "Soporte Computacional",
+    year: "2023",
+  },
+  {
+    logo: "/assets/images/movistar.png",
+    institution: "Movistar",
+    title: "Principios de Big Data",
+    year: "2023",
+  },
+  {
+    logo: "/assets/images/aiep.png",
+    institution: "AIEP",
+    title: "Diplomado Diseño y Programación Web",
+    year: "2022",
+  },
+  {
+    logo: "/assets/images/lichan.png",
+    institution: "Liceo Chileno Alemán",
+    title: "Técnico Electrónico",
+    year: "2021",
+  },
+  {
+    logo: "/assets/images/inacap.png",
+    institution: "INACAP",
+    title: "Curso PYTHON",
+    year: "2019",
+  },
+];
 
+const EducationCard = ({ logo, institution, title, year }) => (
+  <div className="group w-40 sm:w-44 md:w-48 h-40 sm:h-44 md:h-48 border border-yellow-400 rounded-full flex flex-col items-center justify-center text-center text-black p-3 bg-white hover:scale-105 hover:bg-yellow-50 transition duration-300 overflow-hidden shadow-[0_0_20px_2px_rgba(234,179,8,0.4)] hover:shadow-[0_0_30px_4px_rgba(234,179,8,0.8)]">
+    <img
+      src={logo}
+      alt={institution}
+      className="w-16 sm:w-20 md:w-24 h-auto object-contain mb-2 transition-transform duration-300 group-hover:scale-110"
+    />
+    <div className="text-sm sm:text-base md:text-lg font-semibold leading-tight">
+      {institution}
+    </div>
+    <div className="text-[11px] sm:text-sm md:text-sm font-light leading-tight">
+      {title}
+    </div>
+    <div className="text-[11px] sm:text-sm mt-1 font-light">{year}</div>
+  </div>
+);
+
+const EducationGrid = () => {
   useGSAP(() => {
-    gsap.to('#exploreVideo', {
-      scrollTrigger: {
-        trigger: '#exploreVideo',
-        toggleActions: 'play pause reverse restart',
-        start: '-10% bottom',
-      },
-      onComplete: () => {
-        videoRef.current.play();
+    gsap.fromTo(
+      ".edu-card",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: "#education-section",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
       }
-    })
-
-    animateWithGsap('#features_title', { y:0, opacity:1})
-    animateWithGsap(
-      '.g_grow',
-      { scale: 1, opacity: 1, ease: 'power1' },
-      { scrub: 5.5 }
     );
-    animateWithGsap(
-      '.g_text',
-      {y:0, opacity: 1,ease: 'power2.inOut',duration: 1}
-    )
   }, []);
 
   return (
-    <section className="h-full common-padding bg-zinc relative overflow-hidden">
-      <div className="screen-max-wdith">
-        <div className="mb-12 w-full">
-          <h1 id="features_title" className="section-heading">Experiencia.</h1>
-        </div>
-        
-        <div className="flex flex-col justify-center items-center overflow-hidden">
-          <div className="mt-32 mb-24 pl-24">
-            <h2 className="text-5xl lg:text-7xl font-semibold">iPhone.</h2>
-            <h2 className="text-5xl lg:text-7xl font-semibold">Forged in titanium.</h2>
+    <section
+      id="education-section"
+      className="bg-[#111111] py-16 text-white scroll-mt-10"
+    >
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-12">
+        Educación, Cursos y Certificaciones
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5 md:gap-6 px-4 md:px-12 justify-items-center">
+        {educationItems.map((item, idx) => (
+          <div key={idx} className="edu-card">
+            <EducationCard {...item} />
           </div>
-
-          <div className="flex-center flex-col sm:px-10">
-            <div className="relative h-[50vh] w-full flex items-center">
-              <video playsInline id="exploreVideo" className="w-full h-full object-cover object-center" preload="none" muted autoPlay ref={videoRef}>
-                <source src={exploreVideo} type="video/mp4" />
-              </video>
-            </div>
-
-            <div className="flex flex-col w-full relative">
-              <div className="feature-video-container">
-                <div className="overflow-hidden flex-1 h-[50vh]">
-                  <img src={explore1Img} alt="titanium" className="feature-video g_grow" />
-                </div>
-                <div className="overflow-hidden flex-1 h-[50vh]">
-                  <img src={explore2Img} alt="titanium 2" className="feature-video g_grow" />
-                </div>
-              </div>
-
-              <div className="feature-text-container">
-                <div className="flex-1 flex-center">
-                  <p className="feature-text g_text">
-                    iPhone 15 Pro is {' '}
-                    <span className="text-white">
-                      the first iPhone to feature an aerospace-grade titanium design
-                    </span>,
-                    using the same alloy that spacecrafts use for missions to Mars.
-                  </p>
-                </div>
-
-                <div className="flex-1 flex-center">
-                  <p className="feature-text g_text">
-                    Titanium has one of the best strength-to-weight ratios of any metal, making these our {' '}
-                    <span className="text-white">
-                      lightest Pro models ever.
-                    </span>
-                    You'll notice the difference the moment you pick one up.
-                  </p>
-                </div>
-
-
-              </div>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Features
+export default EducationGrid;

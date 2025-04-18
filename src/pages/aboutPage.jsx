@@ -75,12 +75,12 @@ const About = () => {
             alt="Foto de Perfil"
           />
 
-          <div className="text-sm md:text-lg text-justify">
+          <div className="text-sm md:text-lg text-justify mt-[100px]">
             <p>
               I am a Semi-Senior IT professional with over five years of experience in dynamic environments, specializing in IT infrastructure and administration, Full Stack development, and cybersecurity. I am currently in my final year of a Computer Engineering degree and have a solid background in data analysis, application development, and platform administration in Windows and Azure environments.
             </p>
             <p className="mt-4">
-            I have led strategic projects focused on process optimization, operational standardization, and continuous improvement. I stand out for my ability to implement scalable solutions, both in web development (ReactJS, TypeScript) and corporate environments, managing Active Directory, Office 365, critical networks, and cybersecurity platforms such as CrowdStrike and Carbon Black.
+              I have led strategic projects focused on process optimization, operational standardization, and continuous improvement. I stand out for my ability to implement scalable solutions, both in web development (ReactJS, TypeScript) and corporate environments, managing Active Directory, Office 365, critical networks, and cybersecurity platforms such as CrowdStrike and Carbon Black.
             </p>
           </div>
         </section>
